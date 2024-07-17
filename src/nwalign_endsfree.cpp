@@ -87,13 +87,13 @@ char **nwalign_endsfree(const char *s1, size_t len1, const char *s2, size_t len2
   
   // Fill out left columns of d, p.
   for (i = 0; i <= len1; i++) {
-    d[i*ncol] = 0; // ends-free gap
+    d[i*ncol] = i * gap_p; // penalize gaps at ends
     p[i*ncol] = 3;
   }
   
   // Fill out top rows of d, p.
   for (j = 0; j <= len2; j++) {
-    d[j] = 0; // ends-free gap
+    d[j] = j * gap_p; // penalize gaps at ends
     p[j] = 2;
   }
   
@@ -127,19 +127,9 @@ char **nwalign_endsfree(const char *s1, size_t len1, const char *s2, size_t len2
 
     for (j = l; j <= r; j++) {
       // Score for the left move.
-      if (i == len1) {
-        left = d[i*ncol + j-1]; // Ends-free gap.
-      } else {
-        left = d[i*ncol + j-1] + gap_p;
-      }
-      
+      left = d[i*ncol + j-1] + gap_p;   
       // Score for the up move.
-      if (j == len2) {
-        up = d[(i-1)*ncol + j]; // Ends-free gap.
-      } else {
-        up = d[(i-1)*ncol + j] + gap_p;
-      }
-
+      up = d[(i-1)*ncol + j] + gap_p;
       // Score for the diagonal move.
       diag = d[(i-1)*ncol + j-1] + score[s1[i-1]-1][s2[j-1]-1];
       
