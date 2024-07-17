@@ -1,4 +1,4 @@
-Package: dada2
+Package: dada2amp
 Type: Package
 Title: Accurate, high-resolution sample inference from amplicon sequencing data
 Description: The dada2 package infers exact amplicon sequence variants (ASVs) from 
